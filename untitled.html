@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>16 کلاسز کوئز</title>
+<style>
+/* Smooth background color animation */
+@keyframes bgAnimation {
+  0% {background-color:#667eea;}
+  25% {background-color:#764ba2;}
+  50% {background-color:#43cea2;}
+  75% {background-color:#ff7e5f;}
+  100% {background-color:#667eea;}
+}
+
+body{
+  font-family: Arial;
+  margin:0;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  min-height:100vh;
+  animation: bgAnimation 20s linear infinite;
+  transition: background 0.5s, color 0.5s;
+}
+body.dark{
+  background:#333 !important;
+  color:white;
+}
+
+.container{
+  width:90%;
+  max-width:800px;
+  background:white;
+  border-radius:20px;
+  overflow:hidden;
+  position:relative;
+  transition: background 0.5s, color 0.5s;
+}
+body.dark .container{
+  background:#222;
+  color:white;
+}
+
+.welcome{
+  text-align:center;
+  padding:60px;
+  background:rgba(102,126,234,0.8);
+  color:white;
+  transition: background 0.5s;
+}
+
+.start{
+  padding:15px 40px;
+  font-size:25px;
+  border:none;
+  border-radius:30px;
+  cursor:pointer;
+  transition: background 0.5s, color 0.5s;
+}
+
+.screen{
+  display:none;
+  padding:20px;
+}
+
+button.back{
+  padding:10px 20px;
+  margin-bottom:10px;
+  border:none;
+  background:#444;
+  color:white;
+  border-radius:10px;
+  cursor:pointer;
+  transition: background 0.5s;
+}
+
+.list-item{
+  padding:15px;
+  margin:10px 0;
+  background:#f2f2f2;
+  cursor:pointer;
+  border-radius:10px;
+  transition: background 0.5s, color 0.5s;
+}
+body.dark .list-item{
+  background:#333;
+  color:white;
+}
+.list-item:hover{
+  background:#e2e2e2;
+}
+body.dark .list-item:hover{
+  background:#555;
+}
+
+.option{
+  background:#eee;
+  padding:15px;
+  margin:10px 0;
+  border-radius:10px;
+  cursor:pointer;
+  transition: background 0.5s, color 0.5s;
+}
+body.dark .option{
+  background:#444;
+  color:white;
+}
+.option.correct{
+  background:#4CAF50;
+  color:white;
+  animation: flashGreen 1s;
+}
+.option.wrong{
+  background:#f44336;
+  color:white;
+  animation: flashRed 1s;
+}
+
+@keyframes flashGreen{
+  0%{background:#4CAF50;}
+  50%{background:#7BE07B;}
+  100%{background:#4CAF50;}
+}
+
+@keyframes flashRed{
+  0%{background:#f44336;}
+  50%{background:#ff6f6f;}
+  100%{background:#f44336;}
+}
+
+.next{
+  margin-top:20px;
+  padding:15px;
+  width:100%;
+  font-size:20px;
+  transition: background 0.5s, color 0.5s;
+}
+
+#translatedQuestion{
+  font-size:18px;
+  color:#444;
+  margin-top:10px;
+  transition: color 0.5s;
+}
+body.dark #translatedQuestion{
+  color:#ddd;
+}
+
+#feedback{
+  font-size:40px;
+  margin-top:10px;
+  transition: color 0.5s;
+}
+
+.settings{
+  position:absolute;
+  top:15px;
+  right:15px;
+  cursor:pointer;
+  font-size:25px;
+  transition: color 0.5s;
+}
+.settings-panel{
+  display:none;
+  position:absolute;
+  top:45px;
+  right:15px;
+  background:#fff;
+  border:1px solid #ccc;
+  padding:15px;
+  border-radius:10px;
+  width:220px;
+  z-index:100;
+  transition: background 0.5s, color 0.5s;
+}
+body.dark .settings-panel{
+  background:#333;
+  color:white;
+  border:1px solid #555;
+}
+.settings-panel label{
+  display:block;
+  margin:5px 0;
+}
+.close-btn{
+  display:block;
+  text-align:right;
+  font-size:20px;
+  cursor:pointer;
+  margin-bottom:10px;
+  transition: color 0.5s;
+}
+.customer-support{
+  margin-top:10px;
+  border-top:1px solid #ccc;
+  padding-top:10px;
+  transition: color 0.5s;
+}
+.customer-support a{
+  display:block;
+  color:#007bff;
+  text-decoration:none;
+  margin:3px 0;
+  transition: color 0.5s;
+}
+</style>
+</head>
+<body>
+
+<div class="container">
+
+<!-- Settings icon -->
+<div class="settings" onclick="toggleSettings()">⋮</div>
+
+<!-- Settings Panel -->
+<div class="settings-panel" id="settingsPanel">
+  <span class="close-btn" onclick="closeSettings()">×</span>
+  <label><input type="checkbox" id="themeToggle" onchange="toggleTheme()"> Dark Mode</label>
+  <div class="customer-support">
+    <strong>Customer Support:</strong>
+    <a href="tel:03437878299">03437878299</a>
+    <a href="tel:03429585837">03429585837</a>
+    <a href="tel:03375418495">03375418495</a>
+    <a href="tel:03299344300">03299344300</a>
+    <a href="https://chat.whatsapp.com/K0tCsOCduSR8050qEZ3sQg" target="_blank">Join WhatsApp Group</a>
+  </div>
+</div>
+
+<!-- Welcome Page -->
+<div id="welcomePage" class="welcome">
+<h1>16 کلاسز کوئز</h1>
+<button class="start" onclick="showClasses()">شروع کریں</button>
+</div>
+
+<!-- Classes Page -->
+<div id="classesPage" class="screen">
+<button class="back" onclick="showWelcome()">واپس</button>
+<h2>کلاس منتخب کریں</h2>
+<div id="classesList"></div>
+</div>
+
+<!-- Books Page -->
+<div id="booksPage" class="screen">
+<button class="back" onclick="showClasses()">واپس</button>
+<h2 id="classTitle"></h2>
+<div id="booksList"></div>
+</div>
+
+<!-- Quiz Page -->
+<div id="quizPage" class="screen">
+<button class="back" onclick="showBooks(currentClass)">واپس</button>
+<h3 id="quizTitle"></h3>
+<div id="questionNumber"></div>
+<h2 id="questionText"></h2>
+<p id="translatedQuestion"></p>
+<div id="options"></div>
+<div id="feedback"></div>
+<button id="nextBtn" class="next" onclick="nextQuestion()" disabled>اگلا سوال</button>
+<h3 id="score">0 نمبر</h3>
+</div>
+
+</div>
+
+<script>
+const classes=[
+'پہلی جماعت','دوسری جماعت','تیسری جماعت','چوتھی جماعت',
+'پانچویں جماعت','چھٹی جماعت','ساتویں جماعت','آٹھویں جماعت',
+'نویں جماعت','دسویں جماعت','گیارہویں جماعت','بارہویں جماعت',
+'BA Part 1','BA Part 2','MA Part 1','MA Part 2'
+];
+const books=[
+'اردو','انگریزی','ریاضی','سائنس','اسلامیات','تاریخ',
+'جغرافیہ','کمپیوٹر','معاشیات','نفسیات','فلسفہ','قانون'
+];
+
+let currentClass="", currentBook="", score=0, questionCount=0, selectedOption=null, correctAnswer="";
+
+// Prefetch variables
+let nextQuestionData = null;
+let isFetching = false;
+
+// Settings functions
+function toggleSettings(){
+  const panel=document.getElementById("settingsPanel");
+  panel.style.display=panel.style.display==="block"?"none":"block";
+}
+function closeSettings(){
+  document.getElementById("settingsPanel").style.display="none";
+}
+function toggleTheme(){
+  document.body.classList.toggle("dark");
+}
+
+// Pages
+window.onload=function(){
+  let html="";
+  classes.forEach((c,i)=>{ html+=`<div class="list-item" onclick="showBooks('${c}')">${i+1}. ${c}</div>`; });
+  document.getElementById("classesList").innerHTML=html;
+
+  let booksHtml="";
+  books.forEach((b,i)=>{ booksHtml+=`<div class="list-item" onclick="startQuiz('${b}')">${i+1}. ${b}</div>`; });
+  document.getElementById("booksList").innerHTML=booksHtml;
+};
+
+function showWelcome(){
+  document.getElementById("welcomePage").style.display="block";
+  document.getElementById("classesPage").style.display="none";
+  document.getElementById("booksPage").style.display="none";
+  document.getElementById("quizPage").style.display="none";
+}
+function showClasses(){
+  document.getElementById("welcomePage").style.display="none";
+  document.getElementById("classesPage").style.display="block";
+  document.getElementById("booksPage").style.display="none";
+  document.getElementById("quizPage").style.display="none";
+}
+function showBooks(cls){
+  currentClass=cls;
+  document.getElementById("welcomePage").style.display="none";
+  document.getElementById("classesPage").style.display="none";
+  document.getElementById("booksPage").style.display="block";
+  document.getElementById("quizPage").style.display="none";
+  document.getElementById("classTitle").innerText=cls;
+}
+
+// نیا فنکشن: اگلا سوال پہلے سے fetch کرنے کے لیے
+async function prefetchNextQuestion() {
+  if (isFetching) return;
+  isFetching = true;
+  try {
+    const response = await fetch("https://opentdb.com/api.php?amount=1&type=multiple");
+    const data = await response.json();
+    nextQuestionData = data.results[0];
+  } catch (e) {
+    console.error("Prefetch error:", e);
+    nextQuestionData = null;
+  } finally {
+    isFetching = false;
+  }
+}
+
+// اپڈیٹڈ generateNewQuestion
+async function generateNewQuestion() {
+  questionCount++;
+  document.getElementById('questionNumber').innerHTML = "سوال " + questionCount;
+  document.getElementById("feedback").innerText = "";
+  
+  try {
+    let q;
+    
+    // اگر پہلے سے fetched سوال موجود ہے تو اسے استعمال کریں
+    if (nextQuestionData) {
+      q = nextQuestionData;
+      nextQuestionData = null; // استعمال کرنے کے بعد خالی کریں
+    } else {
+      // ورنہ نیا fetch کریں
+      const response = await fetch("https://opentdb.com/api.php?amount=1&type=multiple");
+      const data = await response.json();
+      q = data.results[0];
+    }
+    
+    const question = decodeHTML(q.question);
+    correctAnswer = decodeHTML(q.correct_answer);
+    const wrong = q.incorrect_answers.map(a => decodeHTML(a));
+    const options = shuffleArray([correctAnswer, ...wrong]);
+    
+    document.getElementById("questionText").innerHTML = question;
+    translateQuestion(question);
+    
+    let optionsHtml = "";
+    options.forEach((opt) => {
+      // Single quotes escape
+      const escapedOpt = opt.replace(/'/g, "\\'");
+      optionsHtml += `<div class="option" onclick="selectOption(this,'${escapedOpt}')">${opt}</div>`;
+    });
+    document.getElementById("options").innerHTML = optionsHtml;
+    document.getElementById("nextBtn").disabled = true;
+    selectedOption = null;
+    
+    // اگلا سوال پہلے سے fetch کرنا شروع کریں
+    prefetchNextQuestion();
+    
+  } catch (e) {
+    document.getElementById("questionText").innerHTML = "سوال لوڈ نہیں ہوا";
+    // اگر ایرر ہو تو پھر بھی prefetch کرنے کی کوشش کریں
+    prefetchNextQuestion();
+  }
+}
+
+function startQuiz(book){
+  currentBook=book;
+  score=0; 
+  questionCount=0;
+  document.getElementById("booksPage").style.display="none";
+  document.getElementById("quizPage").style.display="block";
+  document.getElementById("quizTitle").innerText=currentClass+" - "+book;
+  document.getElementById("feedback").innerText="";
+  document.getElementById("score").innerText="0 نمبر";
+  
+  // پہلے سے fetched ڈیٹا کو ری سیٹ کریں
+  nextQuestionData = null;
+  generateNewQuestion();
+}
+
+async function translateQuestion(text){
+  try{
+    const res=await fetch("https://api.mymemory.translated.net/get?q="+encodeURIComponent(text)+"&langpair=en|ur");
+    const data=await res.json();
+    document.getElementById("translatedQuestion").innerText=data.responseData.translatedText;
+  } catch{
+    document.getElementById("translatedQuestion").innerText="ترجمہ دستیاب نہیں";
+  }
+}
+
+function selectOption(element,value){
+  if(selectedOption!==null) return;
+  selectedOption=value;
+  const options=document.querySelectorAll(".option");
+  options.forEach(opt=>{ if(opt.innerText===correctAnswer){ opt.classList.add("correct"); } });
+  const feedback=document.getElementById("feedback");
+  if(value!==correctAnswer){
+    element.classList.add("wrong");
+    score-=5;
+    feedback.innerText="🥲";
+  } else{
+    score+=10;
+    feedback.innerText="🎉";
+  }
+  document.getElementById("score").innerText=score+" نمبر";
+  document.getElementById("nextBtn").disabled=false;
+}
+
+function nextQuestion(){ 
+  generateNewQuestion(); 
+}
+
+function shuffleArray(array){
+  for(let i=array.length-1;i>0;i--){
+    const j=Math.floor(Math.random()*(i+1));
+    [array[i],array[j]]=[array[j],array[i]];
+  }
+  return array;
+}
+
+function decodeHTML(text){
+  let txt=document.createElement("textarea");
+  txt.innerHTML=text;
+  return txt.value;
+}
+</script>
+</body>
+</html>
